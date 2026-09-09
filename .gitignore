@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -22,3 +23,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+=======
+venv/
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.DS_Store
+
+# Model files (too large for git — train locally)
+backend/ai/ml/tampering_model.pth
+
+# Temporary document uploads
+*.tmp
+>>>>>>> 25bc8ffbea191f3f4ea8348eb18d0807c6fba98c
