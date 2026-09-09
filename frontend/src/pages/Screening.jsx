@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { verifyDocument } from "../services/api";
 
 function Screening() {
   const [document, setDocument] = useState(null);
@@ -6,6 +7,8 @@ function Screening() {
   const [analysisStarted, setAnalysisStarted] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [scanResult, setScanResult] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const steps = [
     "Document Quality",
@@ -24,6 +27,8 @@ function Screening() {
     setAnalysisStarted(false);
     setAnalysisComplete(false);
     setCurrentStep(0);
+    setScanResult(null);
+    setErrorMsg(null);
 
     if (file.type.startsWith("image/")) {
       const imageUrl = URL.createObjectURL(file);
@@ -33,30 +38,39 @@ function Screening() {
     }
   };
 
-  const startAnalysis = () => {
+  const startAnalysis = async () => {
     if (!document) return;
 
     setAnalysisStarted(true);
     setAnalysisComplete(false);
-    setCurrentStep(1);
+    setScanResult(null);
+    setErrorMsg(null);
+    setCurrentStep(1); // Starting Document Quality
 
-    let step = 1;
+    try {
+      // Initiate actual API call
+      const result = await verifyDocument(document);
 
-    const interval = setInterval(() => {
-      step++;
-
-      if (step <= 5) {
-        setCurrentStep(step);
-      }
-
-      if (step === 5) {
-        clearInterval(interval);
-
-        setTimeout(() => {
+      // Simulate pipeline progression for better UX
+      let step = 1;
+      const interval = setInterval(() => {
+        step++;
+        if (step <= 5) {
+          setCurrentStep(step);
+        }
+        if (step === 5) {
+          clearInterval(interval);
+          setScanResult(result);
           setAnalysisComplete(true);
-        }, 1000);
-      }
-    }, 1200);
+        }
+      }, 800);
+
+    } catch (err) {
+      setErrorMsg(err.message || "An error occurred during verification.");
+      setAnalysisStarted(false);
+      setAnalysisComplete(false);
+      setCurrentStep(0);
+    }
   };
 
   const clearScreening = () => {
@@ -65,16 +79,25 @@ function Screening() {
     setAnalysisStarted(false);
     setAnalysisComplete(false);
     setCurrentStep(0);
+    setScanResult(null);
+    setErrorMsg(null);
   };
 
   const getStepStatus = (index) => {
     if (!analysisStarted) return "waiting";
-
     if (index + 1 < currentStep) return "complete";
-
     if (index + 1 === currentStep) return "processing";
-
     return "waiting";
+  };
+
+  // Helper to get formatted status from backend result
+  const formatStatus = (moduleName) => {
+    if (!scanResult) return "Waiting";
+    const status = scanResult[moduleName]?.status;
+    if (status === "completed") return "Completed";
+    if (status === "failed") return "Failed";
+    if (status === "not_available") return "Not Available";
+    return "Waiting";
   };
 
   return (
@@ -82,7 +105,6 @@ function Screening() {
 
       {/* HEADER */}
       <div className="page-header">
-
         <div>
           <div className="breadcrumb">
             Dashboard / New Screening
@@ -99,24 +121,18 @@ function Screening() {
           <span className="online-dot"></span>
           Ready
         </div>
-
       </div>
 
-
-      {/* DEMO NOTICE */}
-      <div className="demo-notice">
-        <span>ℹ️</span>
-
-        <div>
-          <strong>Frontend Demo Mode</strong>
-
-          <p>
-            AI, OCR, MRZ, face verification and risk results are
-            simulated in this frontend version. Real analysis will
-            be connected through the backend later.
-          </p>
+      {/* ERROR NOTICE */}
+      {errorMsg && (
+        <div className="demo-notice" style={{ backgroundColor: "#fee2e2", borderColor: "#ef4444" }}>
+          <span>❌</span>
+          <div>
+            <strong style={{ color: "#b91c1c" }}>Error during analysis</strong>
+            <p style={{ color: "#b91c1c" }}>{errorMsg}</p>
+          </div>
         </div>
-      </div>
+      )}
 
 
       {/* DOCUMENT UPLOAD */}
@@ -143,7 +159,7 @@ function Screening() {
 
           <input
             type="file"
-            accept=".jpg,.jpeg,.png,.pdf"
+            accept=".jpg,.jpeg,.png,.webp,.bmp,.tiff"
             onChange={handleDocumentUpload}
           />
 
@@ -168,7 +184,7 @@ function Screening() {
           <p>
             {document
               ? `${(document.size / 1024 / 1024).toFixed(2)} MB`
-              : "Supported formats: JPG, JPEG, PNG, PDF"}
+              : "Supported formats: JPG, JPEG, PNG, WEBP"}
           </p>
 
         </label>
@@ -184,7 +200,7 @@ function Screening() {
 
             <div>
               <span>File Type</span>
-              <strong>{document.type || "PDF"}</strong>
+              <strong>{document.type || "Unknown"}</strong>
             </div>
 
             <div>
@@ -295,6 +311,11 @@ function Screening() {
                 Current screening results.
               </p>
             </div>
+            {scanResult?.request_id && (
+              <div style={{ fontSize: "12px", color: "#64748b" }}>
+                Request ID: {scanResult.request_id.slice(0, 8)}...
+              </div>
+            )}
           </div>
 
 
@@ -304,43 +325,60 @@ function Screening() {
               <span className="result-icon">📄</span>
               <span>Document Quality</span>
               <strong>
-                {analysisComplete ? "Good" : "Processing"}
+                {analysisComplete ? (scanResult?.document?.quality?.usable ? "Good" : "Poor Flagged") : "Processing"}
               </strong>
             </div>
 
-            <div className="result-card">
+            <div className={`result-card ${scanResult?.ocr?.status === 'not_available' || scanResult?.mrz?.status === 'failed' ? 'warning' : ''}`}>
               <span className="result-icon">🔤</span>
               <span>OCR & MRZ</span>
               <strong>
-                {analysisComplete ? "Validated" : "Processing"}
+                {analysisComplete ? `OCR: ${formatStatus('ocr')} | MRZ: ${formatStatus('mrz')}` : "Processing"}
               </strong>
             </div>
 
-            <div className="result-card">
+            <div className={`result-card ${scanResult?.tampering?.status === 'not_available' ? 'warning' : ''}`}>
               <span className="result-icon">🛡️</span>
               <span>Tampering</span>
               <strong>
-                {analysisComplete ? "No Result Yet" : "Processing"}
+                {analysisComplete ? formatStatus('tampering') : "Processing"}
               </strong>
             </div>
 
-            <div className="result-card">
+            <div className={`result-card ${scanResult?.face_verification?.status === 'not_available' ? 'warning' : ''}`}>
               <span className="result-icon">👤</span>
               <span>Face Verification</span>
               <strong>
-                {analysisComplete ? "Pending Capture" : "Waiting"}
+                {analysisComplete ? formatStatus('face_verification') : "Waiting"}
               </strong>
             </div>
 
             <div className="result-card">
               <span className="result-icon">⚠️</span>
-              <span>Risk Assessment</span>
+              <span>Risk Score / Recommendation</span>
               <strong>
-                {analysisComplete ? "Pending Review" : "Waiting"}
+                {analysisComplete
+                  ? `Level: ${scanResult?.risk?.level?.toUpperCase() || 'UNKNOWN'} (${scanResult?.risk?.score || 0})`
+                  : "Waiting"}
               </strong>
+              {analysisComplete && (
+                <div style={{ marginTop: '0.5rem', fontWeight: 500 }}>
+                  Action: {scanResult?.recommendation?.action?.replace('_', ' ').toUpperCase()}
+                </div>
+              )}
             </div>
 
           </div>
+
+          {/* BACKEND WARNINGS/NOTES */}
+          {analysisComplete && scanResult?.warnings?.length > 0 && (
+            <div style={{ marginTop: "20px", padding: "15px", backgroundColor: "#fffbeb", borderRadius: "8px", border: "1px solid #fef3c7" }}>
+              <h4 style={{ margin: "0 0 10px 0", color: "#b45309" }}>System Warnings</h4>
+              <ul style={{ margin: 0, paddingLeft: "20px", color: "#92400e" }}>
+                {scanResult.warnings.map((warn, i) => <li key={i}>{warn}</li>)}
+              </ul>
+            </div>
+          )}
 
         </div>
 

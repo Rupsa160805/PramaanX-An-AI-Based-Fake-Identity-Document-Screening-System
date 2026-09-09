@@ -1,19 +1,32 @@
 import React, { useState } from "react";
+import { loginOfficer } from "../services/api";
 
 function Login({ onLogin }) {
   const [officerId, setOfficerId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
-    // Temporary demo login
-    if (officerId === "OFFICER001" && password === "PramaanX@123") {
-      setError("");
-      onLogin();
-    } else {
-      setError("Invalid Officer ID or Password");
+    if (!officerId || !password) {
+      setError("Please provide both Officer ID and Password.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const result = await loginOfficer(officerId, password);
+      // Store token/role if needed, for now just succeed
+      console.log("Logged in successfully:", result);
+      onLogin(result.officer_id);
+    } catch (err) {
+      setError(err.message || "Failed to connect to backend");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -37,6 +50,7 @@ function Login({ onLogin }) {
               placeholder="Enter Officer ID"
               value={officerId}
               onChange={(e) => setOfficerId(e.target.value)}
+              disabled={isLoading}
             />
           </div>
 
@@ -48,6 +62,7 @@ function Login({ onLogin }) {
               placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={isLoading}
             />
           </div>
 
@@ -60,8 +75,9 @@ function Login({ onLogin }) {
           <button
             type="submit"
             className="login-button"
+            disabled={isLoading}
           >
-            Login
+            {isLoading ? "Authenticating..." : "Login"}
           </button>
 
         </form>
