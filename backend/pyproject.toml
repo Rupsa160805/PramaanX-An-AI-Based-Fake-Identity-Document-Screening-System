@@ -1,0 +1,8 @@
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests", "test_ai.py"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+log_cli = true
+log_cli_level = "WARNING"
