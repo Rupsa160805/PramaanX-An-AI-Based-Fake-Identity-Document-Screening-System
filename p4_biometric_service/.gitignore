@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+calibration_results.json
+demo_data/photos/*
+!demo_data/photos/.gitkeep
+*.onnx
+*.bin
+

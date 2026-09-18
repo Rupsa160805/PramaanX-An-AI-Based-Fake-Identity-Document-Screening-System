@@ -1,0 +1,24 @@
+{
+  "threshold": 0.0,
+  "same_person_scores": [
+    0.9301080703735352
+  ],
+  "different_person_scores": [],
+  "same_min": 0.9301080703735352,
+  "different_max": null,
+  "skipped_pairs": [
+    {
+      "pair": "no_face_sample.jpg vs person_a_astronaut.jpg",
+      "reason": "no face detected in /tmp/calib_diff/no_face_sample.jpg"
+    },
+    {
+      "pair": "no_face_sample.jpg vs person_b_coffee.jpg",
+      "reason": "no face detected in /tmp/calib_diff/no_face_sample.jpg"
+    },
+    {
+      "pair": "person_a_astronaut.jpg vs person_b_coffee.jpg",
+      "reason": "reference face could not be used: no face detected in /tmp/calib_diff/person_b_coffee.jpg"
+    }
+  ],
+  "warning": "Calibration is demo evidence, not a production accuracy or liveness evaluation."
+}

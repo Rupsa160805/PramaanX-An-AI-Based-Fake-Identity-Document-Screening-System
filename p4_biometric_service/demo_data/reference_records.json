@@ -1,0 +1,17 @@
+{
+  "records": [
+    {
+      "document_number": "Q2714253",
+      "name": "Demo Person A",
+      "photo_path": "demo_data/photos/demo_person_a.jpg",
+      "note": "Synthetic demo record. Add an authorized team photo locally before running face verification."
+    },
+    {
+      "document_number": "P8841207",
+      "name": "Demo Person B",
+      "photo_path": "demo_data/photos/demo_person_b.jpg",
+      "note": "Synthetic demo record. Add an authorized team photo locally before running face verification."
+    }
+  ]
+}
+
