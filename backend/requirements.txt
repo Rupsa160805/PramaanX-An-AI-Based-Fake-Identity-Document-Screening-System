@@ -1,0 +1,39 @@
+# ============================================================
+# PramaanX Backend — Python Dependencies
+# ============================================================
+# Install:   pip install -r requirements.txt
+# Python:    3.10+
+# ============================================================
+
+# ── Web API ──────────────────────────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+python-multipart==0.0.9         # Required for FastAPI file uploads
+
+# ── Settings / Configuration ─────────────────────────────────
+pydantic-settings==2.3.3
+
+# ── AI / OCR ─────────────────────────────────────────────────
+easyocr==1.7.1
+
+# ── Image Processing ─────────────────────────────────────────
+opencv-python-headless==4.9.0.80
+Pillow==10.3.0
+
+# ── Deep Learning (Tampering Detection) ──────────────────────
+# NOTE: PyTorch installation varies by platform / CUDA version.
+# See https://pytorch.org/get-started/locally/ for the correct
+# install command for your system.
+torch==2.3.0
+torchvision==0.18.0
+
+# ── Scientific Computing ─────────────────────────────────────
+numpy==1.26.4
+
+# ── Testing ──────────────────────────────────────────────────
+pytest==8.2.2
+pytest-asyncio==0.23.7
+httpx==0.27.0                   # Async HTTP client for TestClient
+
+# ── Utilities ────────────────────────────────────────────────
+python-dotenv==1.0.1
