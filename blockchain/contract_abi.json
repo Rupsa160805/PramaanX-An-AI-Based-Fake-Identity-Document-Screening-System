@@ -1,0 +1,135 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "verificationId",
+        "type": "string"
+      },
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "recordType",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "recordHash",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "previousHash",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "RecordSaved",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "verificationId",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "recordType",
+        "type": "string"
+      }
+    ],
+    "name": "getRecord",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "recordHash",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "previousHash",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "exists",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "verificationId",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "recordType",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "recordHash",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "previousHash",
+        "type": "string"
+      }
+    ],
+    "name": "saveRecord",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "verificationId",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "recordType",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "recordHash",
+        "type": "string"
+      }
+    ],
+    "name": "verifyRecord",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

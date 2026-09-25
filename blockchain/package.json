@@ -1,0 +1,16 @@
+{
+  "name": "pramaanx-blockchain-core",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PramaanX P1 — local EVM blockchain integrity core (one contract, three checkpoints)",
+  "scripts": {
+    "compile": "hardhat compile",
+    "node": "hardhat node",
+    "deploy": "hardhat run scripts/deploy.js --network localhost"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "ethers": "^6.13.4",
+    "hardhat": "^2.22.17"
+  }
+}
