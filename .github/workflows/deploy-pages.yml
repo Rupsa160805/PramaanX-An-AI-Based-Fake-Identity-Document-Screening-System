@@ -1,0 +1,76 @@
+name: Deploy frontend to GitHub Pages
+
+# Builds the React/Vite operator console and publishes it to GitHub Pages.
+# Runs on every push to main, and can be triggered manually from the
+# Actions tab via the "Run workflow" button (workflow_dispatch).
+#
+# NOTE: GitHub Pages is static hosting. This deploys the FRONTEND ONLY.
+# The Flask backend, AI pipeline, MongoDB and blockchain node are NOT
+# hosted here, so API calls will fail unless you host the backend
+# elsewhere and set the repo variable VITE_API_BASE_URL to its URL
+# (Settings > Secrets and variables > Actions > Variables).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Permissions required by the official Pages deploy actions.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment; don't cancel an in-progress run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        env:
+          # Serve assets from the project-site subpath (/<repo>/).
+          VITE_BASE: /${{ github.event.repository.name }}/
+          # Point the UI at a hosted backend if you have one; empty = calls
+          # are relative and will 404 on Pages (UI renders as a static demo).
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+        run: |
+          npm run build
+          touch dist/.nojekyll
+          cp dist/index.html dist/404.html
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
