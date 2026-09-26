@@ -1,9 +1,6 @@
-"""P4 — Standalone tests for final_hash and final_service.
+"""P4 — Tests for final_hash and final_service.
 
-This file is placed outside server/tests/ to avoid the existing
-conftest.py, which imports biometric services requiring numpy/cv2.
-
-Run with:  python -m pytest test_p4_final.py -v
+Run with:  python -m pytest server/tests/test_final.py -v
 """
 
 from __future__ import annotations
@@ -12,7 +9,7 @@ import sys
 from pathlib import Path
 
 # Ensure the project root is importable
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import pytest
 
@@ -80,9 +77,9 @@ class TestDeterministicH3:
     def test_same_input_same_h3(self):
         """Same final payload + same H2 must produce identical H3."""
         result = _sample_result()
-        TEST_H2 = "a" * 64
-        h3_a = calculate_h3(build_final_payload(result), TEST_H2)
-        h3_b = calculate_h3(build_final_payload(result), TEST_H2)
+        h2 = "aabbcc"
+        h3_a = calculate_h3(build_final_payload(result), h2)
+        h3_b = calculate_h3(build_final_payload(result), h2)
         assert h3_a == h3_b
         assert len(h3_a) == 64  # SHA-256 hex
 
@@ -103,9 +100,9 @@ class TestChangedResult:
         """Changing one field in the final payload must change H3."""
         result_a = _sample_result()
         result_b = _sample_result(risk={"score": 85.0, "level": "high"})
-        TEST_H2 = "a" * 64
-        h3_a = calculate_h3(build_final_payload(result_a), TEST_H2)
-        h3_b = calculate_h3(build_final_payload(result_b), TEST_H2)
+        h2 = "fixed-h2"
+        h3_a = calculate_h3(build_final_payload(result_a), h2)
+        h3_b = calculate_h3(build_final_payload(result_b), h2)
         assert h3_a != h3_b
 
     def test_transient_fields_ignored(self):
@@ -179,9 +176,9 @@ class TestBlockchainSave:
 class TestBlockchainMatch:
     def test_verify_match(self):
         result = _sample_result()
-        TEST_H2 = "a" * 64
-        create_final_record("PX004", result, TEST_H2)
-        status = verify_final_record("PX004", result, TEST_H2)
+        h2 = "test-h2"
+        create_final_record("PX004", result, h2)
+        status = verify_final_record("PX004", result, h2)
         assert status["status"] == "MATCH"
         assert status["current_hash"] == status["stored_hash"]
 
@@ -193,12 +190,12 @@ class TestBlockchainMatch:
 class TestBlockchainMismatch:
     def test_verify_mismatch(self):
         result_orig = _sample_result()
-        TEST_H2 = "a" * 64
-        create_final_record("PX005", result_orig, TEST_H2)
+        h2 = "test-h2"
+        create_final_record("PX005", result_orig, h2)
 
         # Modify a field → H3 changes → MISMATCH
         result_modified = _sample_result(risk={"score": 99.0, "level": "high"})
-        status = verify_final_record("PX005", result_modified, TEST_H2)
+        status = verify_final_record("PX005", result_modified, h2)
         assert status["status"] == "MISMATCH"
         assert status["current_hash"] != status["stored_hash"]
 
@@ -274,15 +271,15 @@ class TestBuildFinalPayload:
 class TestVerifyAll:
     def test_intact_chain_after_final_anchor(self):
         result = _sample_result()
-        TEST_H2 = "a" * 64
+        h2 = "test-h2"
         # Anchor all three types on the mock
         mock = MockBlockchainService()
         reset_blockchain(mock)
         mock.save_record("PX010", "INPUT", "h1_value", "")
         mock.save_record("PX010", "ANALYSIS", "h2_value", "h1_value")
-        create_final_record("PX010", result, TEST_H2)
+        create_final_record("PX010", result, h2)
 
-        all_status = verify_all_records("PX010", result, TEST_H2)
+        all_status = verify_all_records("PX010", result, h2)
         assert all_status["chain_status"] == "INTACT"
         assert all_status["records"]["INPUT"]["status"] == "VERIFIED"
         assert all_status["records"]["ANALYSIS"]["status"] == "VERIFIED"
@@ -290,15 +287,15 @@ class TestVerifyAll:
 
     def test_warning_on_mismatch(self):
         result = _sample_result()
-        TEST_H2 = "a" * 64
+        h2 = "test-h2"
         mock = MockBlockchainService()
         reset_blockchain(mock)
         mock.save_record("PX011", "INPUT", "h1_value", "")
         mock.save_record("PX011", "ANALYSIS", "h2_value", "h1_value")
-        create_final_record("PX011", result, TEST_H2)
+        create_final_record("PX011", result, h2)
 
         # Tamper
-        tampered = _sample_result(risk={"score": 99.0, "level": "high"})
-        all_status = verify_all_records("PX011", tampered, TEST_H2)
+        result["risk"] = {"score": 99.0, "level": "high"}
+        all_status = verify_all_records("PX011", result, h2)
         assert all_status["chain_status"] == "WARNING"
         assert all_status["records"]["FINAL"]["status"] == "MISMATCH"

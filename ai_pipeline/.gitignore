@@ -1,0 +1,9 @@
+# Generated ML artifacts — do not commit (rebuildable, and large)
+dataset/
+ai/ml/tampering_model.pth
+*.pth
+
+# Runtime
+__pycache__/
+*.pyc
+.env

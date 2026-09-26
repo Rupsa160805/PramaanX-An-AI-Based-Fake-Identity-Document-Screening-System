@@ -40,7 +40,7 @@ My job was to **connect everything together** into a single working API with:
 ## Complete File Structure
 
 ```
-backend/
+ai_pipeline/                          ← (formerly backend/) FastAPI + AI pipeline
 │
 ├── ai/                               ← AI team's code (I did NOT modify these)
 │   ├── ml/

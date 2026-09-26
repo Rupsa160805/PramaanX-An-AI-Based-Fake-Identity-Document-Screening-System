@@ -6,6 +6,7 @@ import UploadDropzone from '../components/UploadDropzone'
 import RiskGauge from '../components/RiskGauge'
 import StatusPill from '../components/StatusPill'
 import VerificationPipeline from '../components/VerificationPipeline'
+import IntegrityPanel from '../components/IntegrityPanel'
 import { verifyDocument, ApiError } from '../services/api'
 
 // Sequential pipeline animation states during processing
@@ -257,6 +258,11 @@ export default function ScreeningPage() {
                   This system provides decision support — not an automatic authenticity verdict.
                 </p>
               </div>
+
+              {/* Blockchain integrity — driven only by the server-owned verification_id */}
+              {result.verification_id && (
+                <IntegrityPanel verificationId={result.verification_id} />
+              )}
             </div>
           )}
         </section>
