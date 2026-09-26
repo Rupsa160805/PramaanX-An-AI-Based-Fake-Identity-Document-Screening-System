@@ -17,10 +17,10 @@
   <a href="#-security-summary">Security</a>
 </p>
 
-![Stars](https://img.shields.io/github/stars/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=6f42c1&logo=github)
-![Forks](https://img.shields.io/github/forks/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=blue&logo=github)
-![Issues](https://img.shields.io/github/issues/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=critical&logo=github)
-![Last Commit](https://img.shields.io/github/last-commit/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=success&logo=git)
+![Stars](https://img.shields.io/github/stars/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=6f42c1&logo=github&logoColor=white&cacheSeconds=1800)
+![Forks](https://img.shields.io/github/forks/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=blue&logo=github&logoColor=white&cacheSeconds=1800)
+![Issues](https://img.shields.io/github/issues/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=critical&logo=github&logoColor=white&cacheSeconds=1800)
+![Last Commit](https://img.shields.io/github/last-commit/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=success&logo=git&logoColor=white&cacheSeconds=1800)
 
 </div>
 
@@ -94,10 +94,10 @@
 ![Blockchain](https://img.shields.io/badge/Blockchain-Integrity%20Chain-blue?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Prototype-orange?style=flat-square)
 
-![Top Language](https://img.shields.io/github/languages/top/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square&color=6f42c1)
-![Languages](https://img.shields.io/github/languages/count/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square)
-![Repo Size](https://img.shields.io/github/repo-size/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square&color=informational)
-![Contributors](https://img.shields.io/github/contributors/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square)
+![Top Language](https://img.shields.io/github/languages/top/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square&color=6f42c1&cacheSeconds=1800)
+![Languages](https://img.shields.io/github/languages/count/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square&cacheSeconds=1800)
+![Repo Size](https://img.shields.io/github/repo-size/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square&color=informational&cacheSeconds=1800)
+![Contributors](https://img.shields.io/github/contributors/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square&cacheSeconds=1800)
 
 </div>
 
