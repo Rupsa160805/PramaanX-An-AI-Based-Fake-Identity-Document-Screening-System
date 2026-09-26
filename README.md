@@ -1,13 +1,38 @@
+<div align="center">
+
 # 🛡️ PramaanX
+
 ### *An AI-based fake identity-document screening system with a blockchain-anchored audit trail*
 
-PramaanX screens identity documents (passports and ID cards) for forgery. It reads
-the printed fields with OCR, validates the machine-readable zone (MRZ) against ICAO
-check digits, runs a deep-learning tamper detector, cross-checks the visible fields
-against the MRZ, and matches the document photo against a reference database with a
-liveness gate. Every verification is anchored to an append-only, three-checkpoint
-hash chain on-chain — so a result can be re-verified later and any change is provable,
-**without ever putting personal data on the blockchain**.
+<p>
+  <b>Read &nbsp;•&nbsp; Validate &nbsp;•&nbsp; Detect &nbsp;•&nbsp; Match &nbsp;•&nbsp; Anchor</b>
+</p>
+
+<p>
+  <a href="#-key-features">Features</a> &nbsp;·&nbsp;
+  <a href="#️-technology-stack">Stack</a> &nbsp;·&nbsp;
+  <a href="#-application-flow">Flow</a> &nbsp;·&nbsp;
+  <a href="#-run-locally">Run Locally</a> &nbsp;·&nbsp;
+  <a href="#-key-api-endpoints">API</a> &nbsp;·&nbsp;
+  <a href="#-security-summary">Security</a>
+</p>
+
+![Stars](https://img.shields.io/github/stars/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=6f42c1&logo=github)
+![Forks](https://img.shields.io/github/forks/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=blue&logo=github)
+![Issues](https://img.shields.io/github/issues/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=critical&logo=github)
+![Last Commit](https://img.shields.io/github/last-commit/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=success&logo=git)
+
+</div>
+
+---
+
+> **PramaanX** screens identity documents (passports and ID cards) for forgery. It reads
+> the printed fields with OCR, validates the machine-readable zone (MRZ) against ICAO
+> check digits, runs a deep-learning tamper detector, cross-checks the visible fields
+> against the MRZ, and matches the document photo against a reference database with a
+> liveness gate. Every verification is anchored to an append-only, three-checkpoint
+> hash chain on-chain — so a result can be re-verified later and any change is provable,
+> **without ever putting personal data on the blockchain**.
 
 ---
 
@@ -51,6 +76,8 @@ hash chain on-chain — so a result can be re-verified later and any change is p
 
 ## 🧰 Skills & Tools
 
+<div align="center">
+
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
@@ -67,9 +94,12 @@ hash chain on-chain — so a result can be re-verified later and any change is p
 ![Blockchain](https://img.shields.io/badge/Blockchain-Integrity%20Chain-blue?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Prototype-orange?style=flat-square)
 
-> Dynamic repo badges (stars, forks, last commit) can be added once the repo is
-> public — point shields.io at `https://img.shields.io/github/stars/<your-org>/PramaanX`
-> and replace `<your-org>` with your GitHub path.
+![Top Language](https://img.shields.io/github/languages/top/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square&color=6f42c1)
+![Languages](https://img.shields.io/github/languages/count/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square)
+![Repo Size](https://img.shields.io/github/repo-size/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square&color=informational)
+![Contributors](https://img.shields.io/github/contributors/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=flat-square)
+
+</div>
 
 ---
 
@@ -250,6 +280,16 @@ PramaanX/
 
 ---
 
+<div align="center">
+
 ### 🛡️ Built to make identity-document fraud provable, explainable, and auditable.
+
+<sub>OCR · MRZ · Deep-learning tamper detection · Biometric match · Blockchain integrity chain</sub>
+
+<br/>
+
+⭐ *If this project helped you, consider starring the repo.*
+
+</div>
 
 
