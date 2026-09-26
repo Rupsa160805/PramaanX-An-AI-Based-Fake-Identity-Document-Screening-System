@@ -17,10 +17,10 @@
   <a href="#-security-summary">Security</a>
 </p>
 
-![Stars](https://img.shields.io/github/stars/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=6f42c1&logo=github&logoColor=white&cacheSeconds=1800)
-![Forks](https://img.shields.io/github/forks/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=blue&logo=github&logoColor=white&cacheSeconds=1800)
-![Issues](https://img.shields.io/github/issues/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=critical&logo=github&logoColor=white&cacheSeconds=1800)
-![Last Commit](https://img.shields.io/github/last-commit/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=success&logo=git&logoColor=white&cacheSeconds=1800)
+![Stars](https://img.shields.io/github/stars/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=6f42c1&logo=github&logoColor=white&cacheSeconds=300)
+![Forks](https://img.shields.io/github/forks/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=blue&logo=github&logoColor=white&cacheSeconds=300)
+![Issues](https://img.shields.io/github/issues/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=critical&logo=github&logoColor=white&cacheSeconds=300)
+![Last Commit](https://img.shields.io/github/last-commit/Rupsa160805/PramaanX-An-AI-Based-Fake-Identity-Document-Screening-System?style=for-the-badge&color=success&logo=git&logoColor=white&cacheSeconds=300)
 
 </div>
 
