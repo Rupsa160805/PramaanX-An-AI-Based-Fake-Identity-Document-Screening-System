@@ -76,9 +76,19 @@ export async function verifyFace(payload) {
   return request('/api/verify-face', { method: 'POST', body: payload })
 }
 
-// POST /api/v1/verify (multipart)  →  { risk, database_checks, persistence, ... }
+// POST /api/v1/verify (multipart)  →  { risk, database_checks, persistence, verification_id, integrity, ... }
 export async function verifyDocument(formData) {
   return request('/api/v1/verify', { method: 'POST', body: formData })
+}
+
+// POST /api/v1/integrity/verify-all  →  { verification_id, records, chain_status }
+// Server-driven: only the verification_id is sent; the backend recomputes
+// H1/H2/H3 from the persisted result. React never supplies a hash.
+export async function verifyAll(verificationId) {
+  return request('/api/v1/integrity/verify-all', {
+    method: 'POST',
+    body: { verification_id: verificationId },
+  })
 }
 
 // GET /api/v1/dashboard  →  { total_screenings, today_checks, flagged, high_risk, open_alerts }

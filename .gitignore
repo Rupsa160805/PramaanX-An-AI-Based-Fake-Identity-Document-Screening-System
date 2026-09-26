@@ -1,14 +1,38 @@
-frontend/node_modules/
-frontend/.env.local
-frontend/.vite/
-frontend/dist/
+# --- Secrets / local config (never commit) ---
 .env
 *.env
-.venv/
-venv/
+!*.env.example
+blockchain/deployed_address.json
+
+# --- Python ---
 __pycache__/
 *.py[cod]
+*.egg-info/
 .pytest_cache/
-.ruff_cache/
-p4_local_database.json
-pramaanx_local_database.json
+.venv/
+venv/
+env/
+
+# --- Node / frontend ---
+node_modules/
+frontend/dist/
+npm-debug.log*
+yarn-error.log*
+
+# --- Blockchain build artifacts ---
+blockchain/artifacts/
+blockchain/cache/
+
+# --- Generated ML dataset (regenerate via build_dataset.py) ---
+ai_pipeline/dataset/
+
+# --- Local data / logs ---
+*.log
+server/local_store/
+*.local.json
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

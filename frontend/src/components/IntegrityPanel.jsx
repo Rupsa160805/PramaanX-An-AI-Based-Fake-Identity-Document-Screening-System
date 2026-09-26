@@ -42,13 +42,16 @@ function ChainBadge({ chainStatus }) {
     )
 }
 
-export default function IntegrityPanel({ verificationId, screeningResult, h2 }) {
+export default function IntegrityPanel({ verificationId }) {
     const [integrityData, setIntegrityData] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const [demoResult, setDemoResult] = useState(null)
 
+    // Server-driven: only the verification_id is sent. The backend recomputes
+    // H1/H2/H3 from the persisted screening result — React never supplies a hash.
     const checkIntegrity = useCallback(async () => {
+        if (!verificationId) return
         setLoading(true)
         setError(null)
         try {
@@ -56,11 +59,7 @@ export default function IntegrityPanel({ verificationId, screeningResult, h2 }) 
             const resp = await fetch(`${apiBase}/api/v1/integrity/verify-all`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    verification_id: verificationId || 'PX-DEMO-001',
-                    result: screeningResult || null,
-                    h2: h2 || '',
-                }),
+                body: JSON.stringify({ verification_id: verificationId }),
             })
             if (!resp.ok) throw new Error(`Integrity check failed (${resp.status})`)
             const data = await resp.json()
@@ -71,9 +70,10 @@ export default function IntegrityPanel({ verificationId, screeningResult, h2 }) 
         } finally {
             setLoading(false)
         }
-    }, [verificationId, screeningResult, h2])
+    }, [verificationId])
 
     const anchorFinal = useCallback(async () => {
+        if (!verificationId) return
         setLoading(true)
         setError(null)
         try {
@@ -81,11 +81,7 @@ export default function IntegrityPanel({ verificationId, screeningResult, h2 }) 
             const resp = await fetch(`${apiBase}/api/v1/integrity/final`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    verification_id: verificationId || 'PX-DEMO-001',
-                    result: screeningResult || null,
-                    h2: h2 || '',
-                }),
+                body: JSON.stringify({ verification_id: verificationId }),
             })
             if (!resp.ok) throw new Error(`Anchor failed (${resp.status})`)
             // After anchoring, re-check integrity
@@ -95,7 +91,7 @@ export default function IntegrityPanel({ verificationId, screeningResult, h2 }) 
         } finally {
             setLoading(false)
         }
-    }, [verificationId, screeningResult, h2, checkIntegrity])
+    }, [verificationId, checkIntegrity])
 
     const runDemoMismatch = useCallback(async () => {
         setLoading(true)
